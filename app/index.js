@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
-import TestPage from './Pages/TestPage';
-
-function Clock(){
+import Boot from './Pages/Boot';
+function Main(){
     let hello = "Hello React"
+
     return(
     <div>
-        <h1>{hello}</h1>
+        <Boot />
     </div>
     )
 }
 
-ReactDOM.render(<Clock />,document.getElementById('root'))
+ReactDOM.render(<Main />,document.getElementById('root'))
 
