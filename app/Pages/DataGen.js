@@ -1,5 +1,5 @@
 import React from "react";
-
+import '../index.css'
 export default class DataGen extends React.Component {
   constructor(props) {
     super();
@@ -7,7 +7,8 @@ export default class DataGen extends React.Component {
     this.state = {
         prData: 0,
         prDataArr: [],
-        timer: 0
+        flData: 0,
+        flDataArr: []
     };
   }
 
@@ -22,32 +23,34 @@ export default class DataGen extends React.Component {
     var i = 0;
     setInterval(()=>{
         var prSinWave = 2 * Math.sin((0.5 * Math.PI * i) / 5) + Math.sin((Math.PI * i) / 5) + 2.598;
+        var flSineWave = 8 * Math.sin((0.5 * Math.PI * i) / 8) + Math.sin((Math.PI * i) / 5) + 2.598;
         
         if(this.state.prDataArr.length === 10){
-            this.writeData(this.state.prDataArr, null)
-            this.setState({prDataArr: [prSinWave]});
+            this.writeData(this.state.prDataArr, this.state.flDataArr)
+            this.setState({prDataArr: [prSinWave], flDataArr: [flSineWave]});
             
         }else{
             this.setState({
                 prData: prSinWave,
-                prDataArr: [...this.state.prDataArr, prSinWave]
+                prDataArr: [...this.state.prDataArr, prSinWave],
+                flData: flSineWave,
+                flDataArr: [...this.state.flDataArr, flSineWave]
             })
         }
         i++;
-        
-        // console.log(this.state.prDataArr)
     }, 200)
   }
   componentDidMount() {
     this.genPrData();
-    console.log(this.state.prData);
   }
 
   render() {
     return (
       <div>
-        <p>Pressure Sensor value: {(this.state.prData * 100).toFixed(2)}</p>
-        <p>{this.state.timer}</p>
+        <p>Pressure Sensor value: </p>
+        <span className="uk-badge sensorBadge uk-dark">{(this.state.prData * 100).toFixed(2)}</span>
+        <p>Flow Sensor value: </p>
+        <span className="uk-badge sensorBadge uk-dark">{(this.state.flData * 100).toFixed(2)}</span>
       </div>
     );
   }
